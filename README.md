@@ -3,7 +3,6 @@
 <h3>Register Number: 212223240020</h3>
 
 <h3>AIM:</h3>
-<br>
 <p>To find the PEAS description for the given AI problem and develop an AI agent.</p>
 <br>
 <h3>Theory</h3>
@@ -41,20 +40,20 @@
 <p>Measure the performance parameters: For each treatment performance incremented, for each movement performance decremented</p>
 
 <H3>PROGRAM</H3>
-<python>
+<pre><code>
 import random
 
 class MedicinePrescribingAgent:
     def __init__(self):
         self.rooms = {"Room 1": random.randint(97, 101),
                       "Room 2": random.randint(97, 101)}
-        self.location = "Room 1"  
+        self.location = "Room 1"
         self.performance = 0
 
     def move_to(self, room):
         if self.location != room:
             self.location = room
-            self.performance -= 1  
+            self.performance -= 1
 
     def check_and_treat(self):
         if self.rooms[self.location] > 98.5:
@@ -66,27 +65,20 @@ class MedicinePrescribingAgent:
             self.move_to(action)
         elif action == "treat":
             self.check_and_treat()
-        else:
-            pass 
 
     def print_status(self):
         print(f"Location: {self.location}, Room Status: {self.rooms}")
 
 agent = MedicinePrescribingAgent()
-
 agent.perform_action("Room 1")
 agent.print_status()
-
 agent.perform_action("treat")
 agent.print_status()
-
 agent.perform_action("Room 2")
 agent.print_status()
-
 agent.perform_action("treat")
 agent.print_status()
-
-</python>
+</code></pre>
 
 <H3>OUTPUT</H3>
 
