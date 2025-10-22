@@ -43,46 +43,59 @@
 <pre><code>
 import random
 
-class MedicinePrescribingAgent:
-    def __init__(self):
-        self.rooms = {"Room 1": random.randint(97, 101),
-                      "Room 2": random.randint(97, 101)}
-        self.location = "Room 1"
-        self.performance = 0
+class HealthMonitoringAgent:
+    def __init__(self, patient_data):
+        self.patient_data = patient_data
 
-    def move_to(self, room):
-        if self.location != room:
-            self.location = room
-            self.performance -= 1
+    def monitor_health(self):
+        while True:
+            current_health_state = self.sensors.get_health_state()
+            action = self.choose_action(current_health_state)
+            self.actuators.perform_action(action)
+            if self.choose_action(current_health_state)=="No specific action needed":
+                break
 
-    def check_and_treat(self):
-        if self.rooms[self.location] > 98.5:
-            self.rooms[self.location] = 98.0
-            self.performance += 10
+    def choose_action(self, current_health_state):
+        # Example: A simple rule-based system for decision-making
+        if current_health_state['heart_rate'] > 120:
+            return "Alert healthcare provider: High heart rate detected"
+        elif current_health_state['blood_pressure'] > 140:
+            return "Alert healthcare provider: High blood pressure detected"
+        elif current_health_state['temperature'] > 38:
+            return "Recommend rest and monitor temperature"
+        else:
+            return "No specific action needed"
 
+class HealthSensors:
+    def get_health_state(self):
+        # Example: Simulate health data retrieval (replace with real data in a practical scenario)
+        return {
+            'heart_rate': random.randint(60, 150),
+            'blood_pressure': random.randint(90, 160),
+            'temperature': random.uniform(36.0, 38.5)
+        }
+
+class HealthActuators:
     def perform_action(self, action):
-        if action in self.rooms:
-            self.move_to(action)
-        elif action == "treat":
-            self.check_and_treat()
+        # Example: Print or log the action (in a real scenario, this might involve more complex actions)
+        print(action)
 
-    def print_status(self):
-        print(f"Location: {self.location}, Room Status: {self.rooms}")
-
-agent = MedicinePrescribingAgent()
-agent.perform_action("Room 1")
-agent.print_status()
-agent.perform_action("treat")
-agent.print_status()
-agent.perform_action("Room 2")
-agent.print_status()
-agent.perform_action("treat")
-agent.print_status()
+if __name__ == "__main__":
+    patient_data = {'patient_id': 101, 'name': 'Raj', 'age': 28}
+    
+    health_sensors = HealthSensors()
+    health_actuators = HealthActuators()
+    
+    health_monitoring_agent = HealthMonitoringAgent(patient_data)
+    health_monitoring_agent.sensors = health_sensors
+    health_monitoring_agent.actuators = health_actuators
+    
+    health_monitoring_agent.monitor_health()
 </code></pre>
 
 <H3>OUTPUT</H3>
 
-<img width="633" height="96" alt="image" src="https://github.com/user-attachments/assets/e022f2b0-d204-4294-a447-a1ea06e383a0" />
+<img width="418" height="54" alt="image" src="https://github.com/user-attachments/assets/7fb53911-1a10-4933-a6f7-0ab9be7129cc" />
 
 <H3>RESULT</H3>
 Therefore, PEAS description of the given AI problem is found and an AI agent is developed successfully.
