@@ -42,21 +42,30 @@
 <H3>PROGRAM</H3>
 <pre><code>
 import random
-
+import time
 class HealthMonitoringAgent:
-    def __init__(self, patient_data):
+    def __init__(self, patient_data, sensors, actuators):
         self.patient_data = patient_data
+        self.sensors = sensors
+        self.actuators = actuators
 
     def monitor_health(self):
+        print(f"Monitoring health for patient: {self.patient_data['name']}")
+
         while True:
             current_health_state = self.sensors.get_health_state()
             action = self.choose_action(current_health_state)
+
+            print("Current Health State:", current_health_state)
             self.actuators.perform_action(action)
-            if self.choose_action(current_health_state)=="No specific action needed":
+
+            if action == "No specific action needed":
+                print("Patient is stable. Monitoring stopped.")
                 break
 
+            time.sleep(1)  # wait for 1 second before next reading
+
     def choose_action(self, current_health_state):
-        # Example: A simple rule-based system for decision-making
         if current_health_state['heart_rate'] > 120:
             return "Alert healthcare provider: High heart rate detected"
         elif current_health_state['blood_pressure'] > 140:
@@ -68,34 +77,29 @@ class HealthMonitoringAgent:
 
 class HealthSensors:
     def get_health_state(self):
-        # Example: Simulate health data retrieval (replace with real data in a practical scenario)
         return {
             'heart_rate': random.randint(60, 150),
             'blood_pressure': random.randint(90, 160),
-            'temperature': random.uniform(36.0, 38.5)
+            'temperature': round(random.uniform(36.0, 38.5), 1)
         }
 
 class HealthActuators:
     def perform_action(self, action):
-        # Example: Print or log the action (in a real scenario, this might involve more complex actions)
-        print(action)
+        print("Action:", action)
 
 if __name__ == "__main__":
-    patient_data = {'patient_id': 101, 'name': 'Raj', 'age': 28}
-    
-    health_sensors = HealthSensors()
-    health_actuators = HealthActuators()
-    
-    health_monitoring_agent = HealthMonitoringAgent(patient_data)
-    health_monitoring_agent.sensors = health_sensors
-    health_monitoring_agent.actuators = health_actuators
-    
-    health_monitoring_agent.monitor_health()
+    patient_data = {'patient_id': 123, 'name': 'John Doe', 'age': 35}
+
+    sensors = HealthSensors()
+    actuators = HealthActuators()
+
+    agent = HealthMonitoringAgent(patient_data, sensors, actuators)
+    agent.monitor_health()
 </code></pre>
 
 <H3>OUTPUT</H3>
 
-<img width="418" height="54" alt="image" src="https://github.com/user-attachments/assets/7fb53911-1a10-4933-a6f7-0ab9be7129cc" />
+<img width="879" height="184" alt="image" src="https://github.com/user-attachments/assets/b61d606a-bf8b-430d-b207-ca239e09b40a" />
 
 <H3>RESULT</H3>
 Therefore, PEAS description of the given AI problem is found and an AI agent is developed successfully.
